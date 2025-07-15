@@ -1,4 +1,6 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
@@ -15,9 +17,9 @@
   <url>https://wiki.jenkins-ci.org/display/JENKINS/Active+Directory+Plugin</url>
 
   <scm>
-   <connection>scm:git:git://github.com/jenkinsci/active-directory-plugin.git</connection>
-   <developerConnection>scm:git:git@github.com:jenkinsci/active-directory-plugin.git</developerConnection>
-   <url>https://github.com/jenkinsci/active-directory-plugin</url>
+    <connection>scm:git:git://github.com/jenkinsci/active-directory-plugin.git</connection>
+    <developerConnection>scm:git:git@github.com:jenkinsci/active-directory-plugin.git</developerConnection>
+    <url>https://github.com/jenkinsci/active-directory-plugin</url>
     <tag>HEAD</tag>
   </scm>
 
@@ -39,6 +41,14 @@
   </properties>
 
   <dependencies>
+    <!-- Required for annotation indexing (fixes the compilation issue) -->
+    <dependency>
+      <groupId>org.jenkins-ci</groupId>
+      <artifactId>annotation-indexer</artifactId>
+      <version>1.12</version>
+      <scope>provided</scope>
+    </dependency>
+
     <dependency>
       <groupId>org.jvnet.com4j.typelibs</groupId>
       <artifactId>ado20</artifactId>
@@ -92,7 +102,6 @@
       <artifactId>powermock-api-mockito2</artifactId>
       <scope>test</scope>
     </dependency>
-    <!-- For docker integration tests -->
     <dependency>
       <groupId>org.jenkins-ci.test</groupId>
       <artifactId>docker-fixtures</artifactId>
@@ -113,7 +122,6 @@
         </exclusion>
       </exclusions>
     </dependency>
-    <!-- JCasC compatibility -->
     <dependency>
       <groupId>io.jenkins</groupId>
       <artifactId>configuration-as-code</artifactId>
@@ -135,27 +143,45 @@
   </dependencies>
 
   <build>
-     <plugins>
-       <!-- https://wiki.jenkins-ci.org/display/JENKINS/Marking+a+new+plugin+version+as+incompatible+with+older+versions -->
-       <!-- The new version might break users set-up in case they are using multiple domains with multiple domains controllers available since 1.49 -->
-       <plugin>
-         <groupId>org.jenkins-ci.tools</groupId>
-         <artifactId>maven-hpi-plugin</artifactId>
-         <extensions>true</extensions>
-         <configuration>
-           <compatibleSinceVersion>2.0</compatibleSinceVersion>
-         </configuration>
-       </plugin>
-       <plugin>
-         <groupId>org.apache.maven.plugins</groupId>
-         <artifactId>maven-surefire-plugin</artifactId>
-         <configuration>
-           <forkCount>2C</forkCount>
-           <reuseForks>true</reuseForks>
-           <argLine>-Xms2048m -Xmx2048m</argLine>
-         </configuration>
-       </plugin>
-     </plugins>
+    <plugins>
+      <plugin>
+        <groupId>org.jenkins-ci.tools</groupId>
+        <artifactId>maven-hpi-plugin</artifactId>
+        <extensions>true</extensions>
+        <configuration>
+          <compatibleSinceVersion>2.0</compatibleSinceVersion>
+          <annotationProcessing>true</annotationProcessing>
+        </configuration>
+      </plugin>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.8.1</version>
+        <configuration>
+          <source>1.8</source>
+          <target>1.8</target>
+          <encoding>UTF-8</encoding>
+          <annotationProcessorPaths>
+            <path>
+              <groupId>org.jenkins-ci</groupId>
+              <artifactId>annotation-indexer</artifactId>
+              <version>1.12</version>
+            </path>
+          </annotationProcessorPaths>
+        </configuration>
+      </plugin>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <configuration>
+          <forkCount>2C</forkCount>
+          <reuseForks>true</reuseForks>
+          <argLine>-Xms2048m -Xmx2048m</argLine>
+        </configuration>
+      </plugin>
+    </plugins>
   </build>
 
   <profiles>
@@ -178,6 +204,7 @@
       </build>
     </profile>
   </profiles>
+
   <repositories>
     <repository>
       <id>repo.jenkins-ci.org</id>
@@ -200,4 +227,3 @@
     </license>
   </licenses>
 </project>
-
