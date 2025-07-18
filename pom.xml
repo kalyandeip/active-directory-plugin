@@ -2,59 +2,55 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 
                              http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
 
-  <modelVersion>4.0.0</modelVersion>
-
-  <groupId>org.jenkins-ci.plugins</groupId>
-  <artifactId>active-directory</artifactId>
-  <version>2.17-SNAPSHOT</version>
-  <packaging>hpi</packaging>
-
-  <name>Jenkins Active Directory Plugin</name>
-  <description>Jenkins plugin for Active Directory integration</description>
-
-  <parent>
     <groupId>org.jenkins-ci.plugins</groupId>
-    <artifactId>plugin</artifactId>
-    <version>4.64</version>
-    <relativePath/>
-  </parent>
+    <artifactId>active-directory</artifactId>
+    <version>2.17-SNAPSHOT</version>
+    <packaging>hpi</packaging>
 
-  <properties>
-    <java.level>8</java.level>
-    <jenkins.version>2.426.1</jenkins.version>
-    <hpi-plugin.version>3.47</hpi-plugin.version>
-  </properties>
+    <name>Active Directory Plugin</name>
+    <url>https://www.jenkins.io/</url>
 
-  <repositories>
-    <repository>
-      <id>jenkins-releases</id>
-      <url>https://repo.jenkins-ci.org/releases/</url>
-    </repository>
-  </repositories>
+    <properties>
+        <jenkins.version>2.426.1</jenkins.version>
+        <java.level>11</java.level>
+    </properties>
 
-  <pluginRepositories>
-    <pluginRepository>
-      <id>jenkins-releases</id>
-      <url>https://repo.jenkins-ci.org/releases/</url>
-    </pluginRepository>
-  </pluginRepositories>
+    <repositories>
+        <repository>
+            <id>jenkins-releases</id>
+            <url>https://repo.jenkins-ci.org/releases/</url>
+        </repository>
+    </repositories>
 
-  <dependencies>
-    <dependency>
-      <groupId>org.jenkins-ci.main</groupId>
-      <artifactId>jenkins-core</artifactId>
-      <version>${jenkins.version}</version>
-      <scope>provided</scope>
-    </dependency>
-  </dependencies>
-         
-         <dependency>
-  <groupId>org.mindrot</groupId>
-  <artifactId>jbcrypt</artifactId>
-  <version>0.4</version>
-  <scope>provided</scope>
-</dependency>
+    <dependencies>
+        <!-- Core Jenkins dependencies -->
+        <dependency>
+            <groupId>org.jenkins-ci.main</groupId>
+            <artifactId>jenkins-core</artifactId>
+            <version>${jenkins.version}</version>
+            <scope>provided</scope>
+        </dependency>
 
+        <!-- Fix for missing jbcrypt -->
+        <dependency>
+            <groupId>org.mindrot</groupId>
+            <artifactId>jbcrypt</artifactId>
+            <version>0.4</version>
+        </dependency>
+
+        <!-- Add other dependencies here as needed -->
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.jenkins-ci.tools</groupId>
+                <artifactId>maven-hpi-plugin</artifactId>
+                <version>3.4</version>
+            </plugin>
+        </plugins>
+    </build>
 
 </project>
