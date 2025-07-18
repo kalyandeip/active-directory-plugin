@@ -12,80 +12,41 @@
 
   <name>Jenkins Active Directory Plugin</name>
   <description>Jenkins plugin for Active Directory integration</description>
-  <url>https://plugins.jenkins.io/active-directory/</url>
 
-  <licenses>
-    <license>
-      <name>The MIT License</name>
-      <url>http://opensource.org/licenses/MIT</url>
-    </license>
-  </licenses>
-
-  <developers>
-    <developer>
-      <id>jenkinsci</id>
-      <name>Jenkins Project</name>
-    </developer>
-  </developers>
-
-  <!-- ✅ Jenkins Plugin Parent -->
   <parent>
     <groupId>org.jenkins-ci.plugins</groupId>
     <artifactId>plugin</artifactId>
     <version>4.64</version>
-    <relativePath /> <!-- Prevent Maven from looking for a local parent -->
+    <relativePath/>
   </parent>
 
-  <!-- ✅ Project Properties -->
   <properties>
-    <java.level>8</java.level> <!-- Change to 11 if required -->
+    <java.level>8</java.level>
     <jenkins.version>2.426.1</jenkins.version>
     <hpi-plugin.version>3.47</hpi-plugin.version>
   </properties>
 
-  <!-- ✅ Plugin Dependencies -->
+  <repositories>
+    <repository>
+      <id>jenkins-releases</id>
+      <url>https://repo.jenkins-ci.org/releases/</url>
+    </repository>
+  </repositories>
+
+  <pluginRepositories>
+    <pluginRepository>
+      <id>jenkins-releases</id>
+      <url>https://repo.jenkins-ci.org/releases/</url>
+    </pluginRepository>
+  </pluginRepositories>
+
   <dependencies>
-    <!-- Required for Jenkins plugin -->
     <dependency>
       <groupId>org.jenkins-ci.main</groupId>
       <artifactId>jenkins-core</artifactId>
       <version>${jenkins.version}</version>
       <scope>provided</scope>
     </dependency>
-
-    <!-- Optional: COM4J (used by some AD plugins) -->
-    <dependency>
-      <groupId>com4j</groupId>
-      <artifactId>com4j</artifactId>
-      <version>20100207</version>
-    </dependency>
-
-    <!-- Optional: Java Native Access -->
-    <dependency>
-      <groupId>net.java.dev.jna</groupId>
-      <artifactId>platform</artifactId>
-      <version>5.5.0</version>
-    </dependency>
-
-    <!-- Optional: For Jenkins plugin testing -->
-    <dependency>
-      <groupId>org.jenkins-ci.main</groupId>
-      <artifactId>jenkins-test-harness</artifactId>
-      <version>1556.v0d407b_798d89</version>
-      <scope>test</scope>
-    </dependency>
   </dependencies>
-
-  <!-- ✅ Repositories (required for parent + dependencies) -->
-  <repositories>
-    <repository>
-      <id>jenkins-releases</id>
-      <url>https://repo.jenkins-ci.org/releases/</url>
-    </repository>
-    <repository>
-      <id>maven-central</id>
-      <url>https://repo.maven.apache.org/maven2</url>
-    </repository>
-  </repositories>
 
 </project>
