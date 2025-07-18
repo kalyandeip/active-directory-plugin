@@ -24,8 +24,15 @@
         </repository>
     </repositories>
 
+    <pluginRepositories>
+        <pluginRepository>
+            <id>jenkins-ci-plugin</id>
+            <url>https://repo.jenkins-ci.org/releases/</url>
+        </pluginRepository>
+    </pluginRepositories>
+
     <dependencies>
-        <!-- Core Jenkins dependencies -->
+        <!-- Jenkins Core -->
         <dependency>
             <groupId>org.jenkins-ci.main</groupId>
             <artifactId>jenkins-core</artifactId>
@@ -33,14 +40,12 @@
             <scope>provided</scope>
         </dependency>
 
-        <!-- Fix for missing jbcrypt -->
+        <!-- JBCrypt replacement -->
         <dependency>
             <groupId>org.mindrot</groupId>
             <artifactId>jbcrypt</artifactId>
             <version>0.4</version>
         </dependency>
-
-        <!-- Add other dependencies here as needed -->
     </dependencies>
 
     <build>
@@ -52,5 +57,4 @@
             </plugin>
         </plugins>
     </build>
-
 </project>
