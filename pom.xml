@@ -1,4 +1,4 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" 
+<project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 
                              http://maven.apache.org/xsd/maven-4.0.0.xsd">
@@ -26,6 +26,13 @@
         </repository>
     </repositories>
 
+    <pluginRepositories>
+        <pluginRepository>
+            <id>repo.jenkins-ci.org</id>
+            <url>https://repo.jenkins-ci.org/public/</url>
+        </pluginRepository>
+    </pluginRepositories>
+
     <dependencies>
         <!-- Jenkins Core -->
         <dependency>
@@ -35,22 +42,14 @@
             <scope>provided</scope>
         </dependency>
 
-        <!-- Jenkins Annotations -->
+        <!-- Annotation Processor -->
         <dependency>
             <groupId>org.jenkins-ci</groupId>
             <artifactId>annotation-indexer</artifactId>
             <version>1.12</version>
         </dependency>
 
-        <!-- Active Directory & LDAP -->
-        <dependency>
-            <groupId>javax.naming</groupId>
-            <artifactId>jndi</artifactId>
-            <version>1.2.1</version>
-            <scope>provided</scope>
-        </dependency>
-
-        <!-- Testing -->
+        <!-- Test Dependencies -->
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
@@ -61,8 +60,7 @@
 
     <build>
         <plugins>
-
-            <!-- HPI Plugin -->
+            <!-- Jenkins Plugin Compiler -->
             <plugin>
                 <groupId>org.jenkins-ci.tools</groupId>
                 <artifactId>maven-hpi-plugin</artifactId>
@@ -73,7 +71,7 @@
                 </configuration>
             </plugin>
 
-            <!-- Compiler Plugin -->
+            <!-- Java Compiler -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -90,27 +88,6 @@
                     </annotationProcessorPaths>
                 </configuration>
             </plugin>
-
-            <!-- Annotation Processor Plugin -->
-            <plugin>
-                <groupId>org.bsc.maven</groupId>
-                <artifactId>maven-processor-plugin</artifactId>
-                <version>3.3.3</version>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>process</goal>
-                        </goals>
-                        <phase>generate-sources</phase>
-                    </execution>
-                </executions>
-                <configuration>
-                    <processors>
-                        <processor>org.jenkinsci.AnnotationProcessorImpl</processor>
-                    </processors>
-                </configuration>
-            </plugin>
-
         </plugins>
     </build>
 </project>
