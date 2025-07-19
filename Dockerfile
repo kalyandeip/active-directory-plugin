@@ -1,14 +1,22 @@
-# Use Maven with OpenJDK 8 (as required by the plugin)
-FROM maven:3.8.8-eclipse-temurin-8
+# Stage 1: Use Maven with JDK 8 to build the plugin
+FROM maven:3.8.8-eclipse-temurin-8 AS builder
 
 # Set working directory
 WORKDIR /usr/src/app
 
-# Copy the entire project into the container
+# Copy project files
 COPY . .
 
-# Build the plugin (you can use -DskipTests for faster builds)
-RUN mvn clean install -DskipTests
+# Ensure latest metadata and avoid Maven cache issues
+RUN mvn clean install -DskipTests -U
 
-# Default command to list the HPI output
+# Stage 2: Optional minimal image (you can skip if you just want the .hpi file)
+# FROM openjdk:8-jre-slim
+# COPY --from=builder /usr/src/app/target/*.hpi /plugin/
+
+# CMD ["ls", "-l", "/plugin"]
+
+# If you're just building and exporting .hpi, stop here
+
+# Default CMD to show output
 CMD ["ls", "-l", "target/*.hpi"]
